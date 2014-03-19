@@ -1,4 +1,6 @@
 <?php
+// Define a path alias for the Bootstrap extension as it's used internally.
+Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
@@ -8,6 +10,7 @@
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Testmaker 4',
+	//'theme'=>'bootstrap',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -23,6 +26,9 @@ return array(
 	'modules'=>array(
 		// uncomment the following to enable the Gii tool
 		'gii'=>array(
+			'generatorPaths'=>array(
+					'bootstrap.gii',
+			),
 			'class'=>'system.gii.GiiModule',
 			'password'=>'tm4',
 			// If removed, Gii defaults to localhost only. Edit carefully to taste.
@@ -65,6 +71,9 @@ return array(
 
 	// application components
 	'components'=>array(
+	'bootstrap'=>array(
+			'class'=>'bootstrap.components.Bootstrap',
+			),
 		'user'=>array(
 			// enable cookie-based authentication
 			'class' => 'WebUser',
