@@ -77,4 +77,21 @@ class RegistrationController extends Controller
 			    $this->render('/user/registration',array('model'=>$model,'profile'=>$profile));
 		    }
 	}
+	
+	/**
+	 * Render current data privacy statement
+	 */
+	public function actionViewDataPrivacyStatement(){
+		$dpComp = new DataPrivacy();
+		$privacyStatement = $dpComp->getLastestDataPrivacyDescription('es');
+		$this->render('//dataPrivacyDefinition/index',array('statementDescription'=>$privacyStatement));
+	}
+	
+	public function actionDataprivacyAccepted(){	
+		$this->redirect(Yii::app()->controller->module->returnUrl);
+	}
+	
+	public function actionDataprivacyDecline(){
+		$this->redirect(Yii::app()->controller->module->returnUrl);
+	}
 }

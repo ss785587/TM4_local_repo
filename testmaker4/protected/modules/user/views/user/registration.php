@@ -78,6 +78,13 @@ $this->breadcrumbs=array(
 			}
 		}
 ?>
+
+	<div class="row_dataprivacy">
+		<?php echo CHtml::activeCheckBox($model,'dataPrivacyCbx'); ?>
+		<?php echo CHtml::activeLabelEx($model,'dataPrivacyCbx'); ?>
+		<?php echo CHtml::link(UserModule::t("Show data privacy statement"),array('viewDataPrivacyStatement')); ?>
+	</div>
+	
 	<?php if (UserModule::doCaptcha('registration')): ?>
 	<div class="row">
 		<?php echo $form->labelEx($model,'verifyCode'); ?>

@@ -71,6 +71,9 @@ class UserLogin extends CFormModel
 				case UserIdentity::ERROR_PASSWORD_INVALID:
 					$this->addError("password",UserModule::t("Password is incorrect."));
 					break;
+				case UserIdentity::ERROR_STATUS_DELETE:
+					$this->addError("status",UserModule::t("Your account has been deleted"));
+					break;
 			}
 		}
 	}

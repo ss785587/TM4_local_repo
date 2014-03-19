@@ -4,6 +4,7 @@ class User extends CActiveRecord
 {
 	const STATUS_NOACTIVE=0;
 	const STATUS_ACTIVE=1;
+	const STATUS_DELETE=3;
 	const STATUS_BANNED=-1;
 	
 	//TODO: Delete for next version (backward compatibility)
@@ -62,13 +63,13 @@ class User extends CActiveRecord
 			array('username', 'unique', 'message' => UserModule::t("This user's name already exists.")),
 			array('email', 'unique', 'message' => UserModule::t("This user's email address already exists.")),
 			array('username', 'match', 'pattern' => '/^[A-Za-z0-9_]+$/u','message' => UserModule::t("Incorrect symbols (A-z0-9).")),
-			array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED)),
+			array('status', 'in', 'range'=>array(self::STATUS_NOACTIVE,self::STATUS_ACTIVE,self::STATUS_BANNED,self::STATUS_DELETE)),
 			array('superuser', 'in', 'range'=>array(0,1)),
             array('userSince', 'default', 'value' => date('Y-m-d H:i:s'), 'setOnEmpty' => true, 'on' => 'insert'),
             array('lastActive', 'default', 'value' => '0000-00-00 00:00:00', 'setOnEmpty' => true, 'on' => 'insert'),
 			array('username, email, superuser, status', 'required'),
 			array('superuser, status', 'numerical', 'integerOnly'=>true),
-			array('idUser, username, password, email, activationKey, userSince, lastActive, superuser, status', 'safe', 'on'=>'search'),
+			array('idUser, username, password, email, activationKey, userSince, lastActive, superuser, status, dataprivacyStatementAccepted', 'safe', 'on'=>'search'),
 		):((Yii::app()->user->id==$this->idUser)?array(
 			array('username, email', 'required'),
 			array('username', 'length', 'max'=>20, 'min' => 3,'message' => UserModule::t("Incorrect username (length between 3 and 20 characters).")),
@@ -136,6 +137,9 @@ class User extends CActiveRecord
             'banned'=>array(
                 'condition'=>'status='.self::STATUS_BANNED,
             ),
+        	'delete'=>array(
+        		'condition'=>'status='.self::STATUS_DELETE,
+        	),
             'superuser'=>array(
                 'condition'=>'superuser=1',
             ),
@@ -149,7 +153,7 @@ class User extends CActiveRecord
     {
           return CMap::mergeArray(Yii::app()->getModule('user')->defaultScope,array(
             'alias'=>'user',
-            'select' => 'user.idUser, user.username, user.email, user.userSince, user.lastActive, user.superuser, user.status',
+            'select' => 'user.idUser, user.username, user.email, user.userSince, user.lastActive, user.superuser, user.dataprivacyStatementAccepted, user.status',
         ));
     }
 	
@@ -159,6 +163,7 @@ class User extends CActiveRecord
 				self::STATUS_NOACTIVE => UserModule::t('Not active'),
 				self::STATUS_ACTIVE => UserModule::t('Active'),
 				self::STATUS_BANNED => UserModule::t('Banned'),
+				self::STATUS_DELETE => UserModule::t('Deleted'),
 			),
 			'AdminStatus' => array(
 				'0' => UserModule::t('No'),
@@ -190,6 +195,7 @@ class User extends CActiveRecord
 		$criteria->compare('userSince',$this->userSince);
 		$criteria->compare('lastActive',$this->lastActive);
 		$criteria->compare('superuser',$this->superuser);
+		$criteria->compare('dataprivacyStatementAccepted',$this->dataprivacyStatementAccepted);
 		$criteria->compare('status',$this->status);
 	
 		return new CActiveDataProvider(get_class($this), array(
@@ -198,5 +204,21 @@ class User extends CActiveRecord
 						'pageSize'=>Yii::app()->getModule('user')->user_page_size,
 				),
 		));
+	}
+	
+	public function getUserSince() {
+		return strtotime($this->userSince);
+	}
+	
+	public function setUserSince($value) {
+		$this->userSince=date('Y-m-d H:i:s',$value);
+	}
+	
+	public function getlastActive() {
+		return strtotime($this->lastActive);
+	}
+	
+	public function setLastActive($value) {
+		$this->lastActive=date('Y-m-d H:i:s',$value);
 	}
 }

@@ -11,6 +11,7 @@ class UserIdentity extends CUserIdentity
 	const ERROR_EMAIL_INVALID=3;
 	const ERROR_STATUS_NOTACTIV=4;
 	const ERROR_STATUS_BAN=5;
+	const ERROR_STATUS_DELETE=6;
 	/**
 	 * Authenticates a user.
 	 * The example implementation makes sure if the username and password
@@ -38,6 +39,8 @@ class UserIdentity extends CUserIdentity
 			$this->errorCode=self::ERROR_STATUS_NOTACTIV;
 		else if($user->status==-1)
 			$this->errorCode=self::ERROR_STATUS_BAN;
+		else if($user->status==User::STATUS_DELETE)
+			$this->errorCode=self::ERROR_STATUS_DELETE;
 		else {
 			$this->_id=$user->idUser;
 			$this->username=$user->username;
