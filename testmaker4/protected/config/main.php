@@ -11,6 +11,7 @@ return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Testmaker 4',
 	//'theme'=>'bootstrap',
+	'language' => 'de',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -48,23 +49,23 @@ return array(
 					# activate user on registration (only sendActivationMail = false)
 					'activeAfterRegister' => false,
 			
-			# automatically login from registration
-							'autoLogin' => true,
+					# automatically login from registration
+					'autoLogin' => true,
 			
-							# registration path
-			'registrationUrl' => array('/user/registration'),
+					# registration path
+					'registrationUrl' => array('/user/registration'),
 			
 					# recovery password path
-			'recoveryUrl' => array('/user/recovery'),
+					'recoveryUrl' => array('/user/recovery'),
 			
-            # login form path
-			            'loginUrl' => array('/user/login'),
+         		 	# login form path
+			        'loginUrl' => array('/user/login'),
 			
-			            		# page after login
-			            		'returnUrl' => array('/user/profile'),
+			        # page after login
+			        'returnUrl' => array('/user/profile'),
 			
-			            				# page after logout
-			            				'returnLogoutUrl' => array('/user/login'),
+			        # page after logout
+			        'returnLogoutUrl' => array('/user/login'),
         ),
 				
 	),

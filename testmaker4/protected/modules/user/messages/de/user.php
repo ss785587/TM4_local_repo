@@ -124,4 +124,6 @@ return array(
 	'The value of the default field (database).' => 'Der Wert des Standard-Bereich (Datenbank).',
 	'Display order of fields.' => 'Anzeige Reihenfolge der Felder.',
 	'Not visited' => 'Nicht besucht',
+	'Please accept the data privacy statement.' => 'Bitte Datenschutzerklärung akzeptieren.',
+	'show data privacy statement' => 'Datenschutzerklärung anzeigen',	
 );

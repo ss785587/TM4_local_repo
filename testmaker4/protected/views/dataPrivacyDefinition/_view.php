@@ -4,6 +4,6 @@
 ?>
 
 <div class="view">
-	<h1>Data Privacy Statement:</h1>
+	<h1><?php echo Yii::t('dataPrivacy','data privacy statement'); ?>:</h1>
 	<p><?php echo $statementDescription ?></p>
 </div>

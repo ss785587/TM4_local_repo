@@ -4907,3 +4907,54 @@ Stack trace:
 REQUEST_URI=/testmaker4/index.php?r=user
 HTTP_REFERER=http://localhost/testmaker4/index.php?r=user/admin
 ---
+2014/03/19 16:20:33 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:20:35 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:20:37 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:20:49 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:20:49 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:20:56 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:21:03 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:26:26 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:26:28 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:26:34 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:26:39 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:26:40 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:26:46 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:26:46 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/19 16:26:56 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/20 09:27:56 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
+2014/03/20 09:28:10 [warning] [application] Failed to set unsafe attribute "verifyCode" of "RegistrationForm".
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\protected\modules\user\controllers\RegistrationController.php (30)
+in D:\tm4\github_Repo\TM4_local_repo\testmaker4\index.php (13)
