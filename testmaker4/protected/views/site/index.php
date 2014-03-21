@@ -1,6 +1,6 @@
 <?php
 /* @var $this SiteController */
-
+//called from UberTestController
 $this->pageTitle=Yii::app()->name;
 ?>
 
@@ -11,3 +11,10 @@ $this->pageTitle=Yii::app()->name;
    You are logged in now!! Welcome <?php echo Yii::app()->user->username; ?>.  
 </p>
 <?php endif;?>
+
+<?php 
+	//List ubertests
+	foreach($dataProvider as $data){
+		$this->renderPartial('//uberTest/_smallView', array('data'=>$data));
+	}
+ ?>
