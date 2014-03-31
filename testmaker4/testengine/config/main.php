@@ -11,7 +11,7 @@ Yii::setPathOfAlias('bootstrap', dirname(__FILE__).'/../extensions/bootstrap');
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Testmaker 4 - TestEngine',
-	'defaultController' => 'initialization',
+	'defaultController' => 'testEngine',
 		
 	//default language
 	'language'=>'en', 

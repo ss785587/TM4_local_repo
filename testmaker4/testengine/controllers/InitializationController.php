@@ -124,7 +124,11 @@ class InitializationController extends Controller
 	}
 	
 	public function startTestEngineLoop($testRun){
-		echo "TESTENGINE STARTED";
+		Yii::import('application.controllers.TestEngineController');
+		Yii::app()->session['TE_testrunDbObj'] = $testRun;
+		//skip INPUT step and begin with UPDATE
+		Yii::app()->session['TE_step'] = TestEngineController::TE_STEP_UPDATE;
+		$this->redirect($this->createUrl("testEngine/index"));
 	}
 	
 	/**

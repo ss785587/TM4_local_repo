@@ -22,6 +22,10 @@ class InputController extends Controller
 	}
 	
 
+	public function actionIndex(){
+		Yii::app()->session['TE_step']=0;
+		echo "TESTENGINE STARTED/INPUT";
+	}
 
 	/**
 	 * This is the action to handle external exceptions.
