@@ -86,8 +86,9 @@ class Calculation{
 	private function resolveVariable($value){
 		//cut flag #
 		$value = substr($value, 1);
-		if(isset($this->testRunObj->variables[$value])){
-			return $this->testRunObj->variables[$value]->value;
+		$tmpVal = $this->testRunObj->getPropValue('variables',$value);
+		if(isset($tmpVal)){
+			return $tmpVal->value;
 		}
 		return null;
 	}
@@ -106,8 +107,9 @@ class Calculation{
 				$tmpObj = $tmpObj->$key; 
 			}
 			elseif(is_array($tmpObj)){
-				if(isset($tmpObj[$key])){
-					$tmpObj = $tmpObj[$key];
+				$tmpArrVal = self::getNamedValueInArray($tmpObj, $key);
+				if(isset($tmpArrVal)){
+					$tmpObj = $tmpArrVal;
 				}
 			}else{
 				return null;
@@ -115,6 +117,23 @@ class Calculation{
 			}
 		}
 		return $tmpObj;
+	}
+	
+	/**
+	 * Iterates over array and compare given name with name values of array. 
+	 * @param array $arr 
+	 * @param string $valueName
+	 * @return object|NULL
+	 */
+	private static function getNamedValueInArray($arr, $valueName){
+		if(isset($arr) && isset($valueName) && is_array($arr)){
+			foreach ($arr as $value){
+				if($valueName === $value->name){
+					return $value;
+				}
+			}
+		}
+		return null;
 	}
 	
 	//========================================== Operators ==================================================

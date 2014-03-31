@@ -3,15 +3,15 @@
 class TestRunObject{
 	
 	/** member variables */
-	public $variables = array();
-	public $scales = array();
-	public $items = array();
-	public $contentelements = array();
-	public $pages = array();
-	public $subtests = array();
-	public $timelog = array();
-	public $user = array();
-	public $triggers = array();
+	public $variables = null;
+	public $scales = null;
+	public $items = null;
+	public $contentelements = null;
+	public $pages = null;
+	public $subtests = null;
+	public $timelog = null;
+	public $user = null;
+	public $triggers = null;
 	
 	/** constructor */
 	public function __construct($jsonObj){
@@ -21,60 +21,56 @@ class TestRunObject{
 		
 		//validate and save variables
 		if(property_exists($jsonObj,'variables')){
-			foreach ($jsonObj->variables as $var) {
-				if(ValidatorTestRun::validateVariable($var)){
-					$this->variables[$var->name] = $var;
-				}
-			} 
+			if(ValidatorTestRun::validateVariables($jsonObj->variables)){
+				$this->variables = $jsonObj->variables;
+			}
 		}
 		//validate and save scales
 		if(property_exists($jsonObj,'scales')){
-			foreach ($jsonObj->scales as $scale) {
-				if(ValidatorTestRun::validateScale($scale)){
-					$this->scales[$scale->name] = $scale;
-				}
-			} 
+			if(ValidatorTestRun::validateScales($jsonObj->scales)){
+				$this->scales = $jsonObj->scales;
+			}
 		}
 		//validate and save items
 		if(property_exists($jsonObj,'items')){
-			foreach ($jsonObj->items as $item) {
-				if(ValidatorTestRun::validateItem($item)){
-					$this->items[$item->name] = $item;
-				}
+			if(ValidatorTestRun::validateItems($jsonObj->items)){
+				$this->items = $jsonObj->items;
 			}
 		}
 		//validate and save contentelements
 		if(property_exists($jsonObj,'contentelements')){
-			foreach ($jsonObj->contentelements as $element) {
-				if(ValidatorTestRun::validateContentElement($element)){
-					$this->contentelements[$element->name] = $element;
-				}
-			}
+			if(ValidatorTestRun::validateContentelements($jsonObj->contentelements)){
+				$this->contentelements = $jsonObj->contentelements;
+			}			
 		}
 		//validate and save pages
 		if(property_exists($jsonObj,'pages')){
-			foreach ($jsonObj->pages as $page) {
-				if(ValidatorTestRun::validatePage($page)){
-					$this->pages[$page->name] = $page;
-				}
-			}
+			if(ValidatorTestRun::validatePages($jsonObj->pages)){
+				$this->pages = $jsonObj->pages;
+			}			
 		}
 		//validate and save subtests
 		if(property_exists($jsonObj,'subtests')){
-			foreach ($jsonObj->subtests as $sub) {
-				if(ValidatorTestRun::validateSubtest($sub)){
-					$this->subtests[$sub->name] = $sub;
-				}
-			}
+			if(ValidatorTestRun::validateSubtests($jsonObj->subtests)){
+				$this->subtests = $jsonObj->subtests;
+			}			
+		}else{
+			throw new CException('Invalid JSON: subtest missing');
 		}
 		//validate and save triggers
 		if(property_exists($jsonObj,'triggers')){
-			foreach ($jsonObj->triggers as $trigger) {
-				if(ValidatorTestRun::validateTrigger($trigger)){
-					$this->triggers[$trigger->name] = $trigger;
-				}
-			}
+			if(ValidatorTestRun::validateTriggers($jsonObj->triggers)){
+				$this->triggers = $jsonObj->triggers;
+			}			
 		}
+		//validate and save triggers
+		if(property_exists($jsonObj,'user')){
+			$this->user = $jsonObj->user;
+		}
+	}
+	
+	private function validate(){
+		
 	}
 	
 	/**
@@ -94,46 +90,22 @@ class TestRunObject{
 	}
 	
 	/**
-	 * Changes the structure of the properties in this object for Json encoding.
-	 * Maps will be transformed to simple arrays.
+	 * Returns value of the given property if it exists. Otherwise method returns null. 
+	 * @param string $propertyName name of property
+	 * @param string $valueName name of the value
+	 * @return Object|NULL
 	 */
-	public function presave(){
-		//change object structure for json save
-		if(isset($this->variables)){
-			$this->variables = $this->changeArrayStructure($this->variables);
+	public function getPropValue($propertyName, $valueName){
+		if(isset($this->$propertyName)){
+			foreach ($this->$propertyName as $value){
+				if($valueName === $value->name){
+					return $value;
+				}
+			}
 		}
-		if(isset($this->scales)){
-			$this->scales = $this->changeArrayStructure($this->scales);
-		}
-		if(isset($this->items)){
-			$this->items = $this->changeArrayStructure($this->items);
-		}
-		if(isset($this->contentelements)){
-			$this->contentelements = $this->changeArrayStructure($this->contentelements);
-		}
-		if(isset($this->pages)){
-			$this->pages = $this->changeArrayStructure($this->pages);
-		}
-		if(isset($this->subtests)){
-			$this->subtests = $this->changeArrayStructure($this->subtests);
-		}
-		if(isset($this->triggers)){
-			$this->triggers = $this->changeArrayStructure($this->triggers);
-		}
+		return null;
 	}
 	
-	/**
-	 * Changes map structure to simple array structe. 
-	 * @param array $map given map
-	 * @return simple array
-	 */
-	private function changeArrayStructure($map){
-		$returnArr = array();
-		foreach($map as $key=>$value){
-			array_push($returnArr, $map[$key]);
-		}
-		return $returnArr;
-	}
 	
 	/**
 	 * Helper method, which checks if the testrun has variables.

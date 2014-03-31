@@ -3,6 +3,113 @@
 class ValidatorTestRun{
 
 	/**
+	 * Validates variables. Returns true, if all variables have a name and a value.
+	 *
+	 * @param array $vars given variables to validate
+	 * @throws CException thrown, if variable has not a name or a value as property
+	 * @return boolean true, if given variables have no missing property
+	 */
+	public static function validateVariables($vars){
+		foreach ($vars as $var) {
+			//if no exception is thrown, every thing is ok
+			ValidatorTestRun::validateVariable($var);					
+		}
+		return true;
+	}
+	
+	/**
+	 * Validates scales. Returns true, if all scales have following properties: name, value and compare.
+	 *
+	 * @param array $scales given array to validate
+	 * @throws CException thrown, if object has not the required properties
+	 * @return boolean true, if given scales have all required properties
+	 */
+	public static function validateScales($scales){
+		foreach ($scales as $scale) {
+			//if no exception is thrown, every thing is ok
+			ValidatorTestRun::validateScale($scale);	
+		}
+		return true;
+	}
+	
+	/**
+	 * Validates items. Returns true, if all items have following properties: name, value, type, content, answers, display, mandatory.
+	 *
+	 * @param array $items given array to validate
+	 * @throws CException thrown, if one object has not the required properties
+	 * @return boolean true, if given itmes have all required properties
+	 */
+	public static function validateItems($items){
+	foreach ($items as $item) {
+			//if no exception is thrown, every thing is ok
+			ValidatorTestRun::validateItem($item);	
+		}
+		return true;
+	}
+	
+	/**
+	 * Validates contentelements. Returns true, if all contentelements have following properties: name, content, type, display.
+	 *
+	 * @param array $elements given array to validate
+	 * @throws CException thrown, if one object has not the required properties
+	 * @return boolean true, if given contentelements have all required properties
+	 */
+	public static function validateContentElements($elements){
+		foreach ($elements as $element) {
+			//if no exception is thrown, every thing is ok
+			ValidatorTestRun::validateContentElement($element);	
+		}
+		return true;
+	}
+	
+	/**
+	 * Validates pages. Returns true, if all pages have following properties: name, elements, subtest, display, navigation.
+	 *
+	 * @param array $pages given objects to validate
+	 * @throws CException thrown, if one object has not the required properties
+	 * @return boolean true, if given variables have all required properties
+	 */
+	public static function validatePages($pages){
+		foreach ($pages as $page) {
+			//if no exception is thrown, every thing is ok
+			ValidatorTestRun::validatePage($page);	
+		}
+		return true;
+	}
+	
+	/**
+	 * Validates subtests. Returns true, if all subtests have following properties: name, instrument, nice_name, pages.
+	 *
+	 * @param array $suss given array to validate
+	 * @throws CException thrown, if one object has not the required properties
+	 * @return boolean true, if given variables have all required properties
+	 */
+	public static function validateSubtests($subs){
+		foreach ($subs as $sub) {
+			//if no exception is thrown, every thing is ok
+			ValidatorTestRun::validateSubtest($sub);	
+		}
+		return true;
+	}
+	
+	/**
+	 * Validates triggers. Returns true, if all triggers have following properties: name, condition, action, params.
+	 *
+	 * @param array $triggers given array to validate
+	 * @throws CException thrown, if one object has not the required properties
+	 * @return boolean true, if given variables have all required properties
+	 */
+	public static function validateTriggers($triggers){
+		foreach ($triggers as $trigger) {
+			//if no exception is thrown, every thing is ok
+			ValidatorTestRun::validateTrigger($trigger);	
+		}
+		return true;
+	}
+	
+	//============================= single validator functions ==================================================
+	
+	/**
 	 * Validates a variable. Returns true, if a variable has a name and a value.
 	 *
 	 * @param object $var given variable to validate

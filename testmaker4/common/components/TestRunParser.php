@@ -16,9 +16,6 @@ class TestRunParser
 	 * @return json string
 	 */
 	public static function encodeToJson($obj){
-		if($obj instanceof TestRunObject){
-			$obj->presave();
-		}
 		//encode Object
 		return self::json_encode($obj);
 	}
