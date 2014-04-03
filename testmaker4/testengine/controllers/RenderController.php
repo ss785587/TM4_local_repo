@@ -2,7 +2,180 @@
 
 class RenderController extends Controller
 {
+	/** properties */
+	private $testRunDbObj;
+	private $testRunObj;
+	
+	/**
+	 * ENTRY POINT RENDER
+	 */
+	public function actionIndex(){
+		//get session values
+		$this->testRunDbObj = Yii::app()->session['TE_testrunDbObj'];
+		$this->testRunObj = Yii::app()->session['TE_jsonObj'];
+		if(!isset($this->testRunDbObj) || !isset($this->testRunObj)){
+			throw new CException('No TestRun in update loop');
+		}
+
+		//check which page should be rendered (forward/backwards) => should be set in TestEngine-INPUT routine
+		$pageDirection = TestEngineController::TE_PAGE_REFRESH;
+		if(isset(Yii::app()->session['TE_PageDirection'])){
+			$pageDirection = Yii::app()->session['TE_PageDirection'];
+		}
 		
+		//currentPagePointer and current subtestPointer will be saved in session
+		//get page to render
+		$pageName = $this->getRenderPageName($pageDirection, $this->testRunObj);
+		$page = $this->testRunObj->getPropValue('pages', $pageName);
+		
+		//display page? If not same method with next page
+		//TODO: $page->display kann variable enthalten
+		if(!$page->display){
+			Yii::app()->session['TE_PageDirection'] = TestEngineController::TE_PAGE_FORWARD;
+			$this->actionIndex();
+			die();
+		}
+		
+		//TODO: create templete of elements
+		$this->render('//TE_index');
+
+	}
+	
+	/**
+	 * Gets next page for rendering process. The pageDirection specify which page will be chosen.
+	 * @param integer $pageDirection previous, next or refresh page
+	 * @param TestRunObject $testRunObj object to the current testrun
+	 */
+	private function getRenderPageName($pageDirection, $testRunObj){
+		//get current subtest
+		$curSubtestPointer = Yii::app()->session['TE_curSubtestPointer'];
+		if(!isset($curSubtestPointer)){
+			$curSubtestPointer = $this->getNextSubtestIndex(null);
+		}
+		//get currentpage
+		$curPageArrPointer = 0;
+		if(isset(Yii::app()->session['TE_curPageArrPointer'])){
+			$curPageArrPointer = Yii::app()->session['TE_curPageArrPointer'];
+		}
+		
+		switch ($pageDirection) {
+			case TestEngineController::TE_PAGE_REFRESH:
+				$subtest = $testRunObj->subtests[$curSubtestPointer];
+				return $subtest->pages[$curPageArrPointer];
+			
+			case TestEngineController::TE_PAGE_FORWARD:
+				return $this->getNextPage($curSubtestPointer,$curPageArrPointer);
+				
+			case TestEngineController::TE_PAGE_BACKWARD:
+				return $this->getPreviousPage($curSubtestPointer,$curPageArrPointer);
+				
+			case TestEngineController::TE_PAGE_ABORT:
+				//fall through
+			default:
+				Yii::app()->session['TE_step'] = TestEngineController::TE_STEP_FINISH;
+				$this->redirect($this->createUrl("testEngine/index"));
+				break;
+		}
+	}
+	
+	/**
+	 * Returns the unique name of the next page based on the given current subtest and page.
+	 * If there is no next page, the test ends
+	 * @param integer $curSubtestPointer
+	 * @param integer $curPageArrPointer Page index reference to array in subtest object.
+	 * @return string page name
+	 */
+	private function getNextPage($curSubtestPointer,$curPageArrPointer){
+		//gets next page to the given subtest and current page pointer
+		//if page pointer doesnt find any more pages, continue with the next subtest
+		$subtest = $this->testRunObj->subtests[$curSubtestPointer];
+		if($curPageArrPointer < count($subtest->pages)-1){
+			++$curPageArrPointer;
+		}else{
+			//next subtest
+			$subIndex = $this->getNextSubtestIndex($curSubtestPointer);
+			if($subIndex < 0 ){
+				//end of test
+				Yii::app()->session['TE_step'] = TestEngineController::TE_STEP_FINISH;
+				$this->redirect($this->createUrl("testEngine/index"));
+				die();
+			}else{
+				//set pointer to next subtest and first page
+				$curSubtestPointer = $subIndex;
+				$curPageArrPointer = 0;
+			}
+		}
+		//save to session
+		Yii::app()->session['TE_curSubtestPointer'] = $curSubtestPointer;
+		Yii::app()->session['TE_curPageArrPointer'] = $curPageArrPointer;
+		//get page name
+		$subtest = $this->testRunObj->subtests[$curSubtestPointer];
+		return $subtest->pages[$curPageArrPointer];
+	}
+	
+	/**
+	 * Returns the unique name of the previous page based on the given current subtest and page.
+	 * If there is no previous page, the given page index will be returned
+	 * @param integer $curSubtestPointer
+	 * @param integer $curPageArrPointer page index reference to array in subtest object
+	 * @return string page name
+	 */
+	private function getPreviousPage($curSubtestPointer,$curPageArrPointer){
+		//gets previous page to the given subtest and current page pointer
+		//if page pointer doesnt find any more pages, continue with previous subtest
+		$subtest = $this->testRunObj->subtests[$curSubtestPointer];
+		if($curPageArrPointer >  0){
+			--$curPageArrPointer;
+		}else{
+			//previous subtest
+			$subIndex = $this->getNextSubtestIndex($curSubtestPointer, TestEngineController::TE_PAGE_BACKWARD);
+			//set pointer to previous subtest and last page
+			$subtest = $this->testRunObj->subtests[$subIndex];
+			$curSubtestPointer = $subIndex;
+			$curPageArrPointer = count($subtest->pages)-1;
+		}
+		//save to session
+		Yii::app()->session['TE_curSubtestPointer'] = $curSubtestPointer;
+		Yii::app()->session['TE_curPageArrPointer'] = $curPageArrPointer;
+		//get page name
+		$subtest = $this->testRunObj->subtests[$curSubtestPointer];
+		return $subtest->pages[$curPageArrPointer];
+	}
+	
+	/**
+	 * Gets next or previous subtest index based on given current index.
+	 * If no previous subtest can be found, given subtest will be returned.
+	 * If no next subtest can be found, a negative value will be returned.
+	 * @param integer $curSubtestPointer
+	 * @param integer $pageDirection
+	 * @return integer
+	 */
+	private function getNextSubtestIndex($curSubtestPointer, $pageDirection = TestEngineController::TE_PAGE_FORWARD){
+		//gets previous or next(default) subtest
+		if(!isset($curSubtestPointer)){
+			//beginning of the test, get first subtest
+			return 0;
+		}
+		//next subtest
+		elseif($pageDirection == TestEngineController::TE_PAGE_FORWARD){
+			if($curSubtestPointer==count($this->testRunObj->subtests)-1){
+				//end of all subtests
+				$curSubtestPointer = -1;
+			}else{
+				++$curSubtestPointer;
+			}
+		}
+		//previous subtest
+		elseif($pageDirection == TestEngineController::TE_PAGE_BACKWARD){
+			if($curSubtestPointer>0){
+				--$curSubtestPointer;
+			}
+		}
+		//set session value
+		Yii::app()->session['TE_curSubtestPointer'] = $curSubtestPointer;
+		return $curSubtestPointer;
+	}
+	
 	/**
 	 * Specifies the access control rules.
 	 * This method is used by the 'accessControl' filter.

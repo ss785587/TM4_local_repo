@@ -68,10 +68,7 @@ class TestRunObject{
 			$this->user = $jsonObj->user;
 		}
 	}
-	
-	private function validate(){
-		
-	}
+
 	
 	/**
 	 * Updates all variables, which have a calculation.

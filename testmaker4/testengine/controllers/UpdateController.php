@@ -20,8 +20,9 @@ class UpdateController extends Controller
  		$testRunDbObj->save();
  		
  		//redirect to next loop step
-//  		Yii::app()->session['TE_step'] = TestEngineController::TE_STEP_RENDER;
-//  		$this->redirect($this->createUrl("testEngine/index"));
+ 		Yii::app()->session['TE_jsonObj'] = $testRunObj;
+  		Yii::app()->session['TE_step'] = TestEngineController::TE_STEP_RENDER;
+ 		$this->redirect($this->createUrl("testEngine/index"));
 	}
 
 	/**
