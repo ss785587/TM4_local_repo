@@ -11,7 +11,7 @@ class UpdateController extends Controller
 			throw new CException('No TestRun in update loop');
 		}
 		//save Object to JSON-String
-		$testRunObj = TestRunParser::parseJson($testRunDbObj->jsonData);
+		$testRunObj = TestRunParser::decodeToTestRunObj($testRunDbObj->jsonData);
 		//recalculate and update variables
 		$testRunObj->updateVariables();
 		

@@ -14,6 +14,12 @@ class TestEngineController extends Controller
 	const TE_PAGE_BACKWARD = 0;
 	const TE_PAGE_REFRESH = 2;
 	const TE_PAGE_ABORT = 3;
+	
+	/** HTTP AJAX STATUS Constants*/
+	const NO_CLIENT_STATE = -100;
+	const HTTP_STATUS_OK = 200;
+	const HTTP_STATUS_RENDERING_OK = 201;
+	const HTTP_STATUS_REDIRECT = 308;
 		
 	/**
 	 * Specifies the access control rules.
@@ -41,6 +47,11 @@ class TestEngineController extends Controller
 		if(!isset($step)){
 			$step = 0;
 		}
+		if(Yii::app()->request){
+			$data = $this->handleRequest();
+			Yii::app()->session['TE_results'] = $data;
+		}
+		
 		switch ($step){
 		
 			case self::TE_STEP_INIT:
@@ -56,13 +67,68 @@ class TestEngineController extends Controller
 				$this->forward('render/index');
 				break;
 			case self::TE_STEP_FINISH:
-				//delete session and redirect to frontend
+				//delete session
 				$this->destroyTESession();
-				header('Location: '. REL_PATH_FRONTEND);
+				//abort AJAX call
+				if(Yii::app()->request->isAjaxRequest){
+					//redirect to frontend
+					self::responeAjaxRequest('http://'.$_SERVER['HTTP_HOST'].REL_PATH_FRONTEND,self::HTTP_STATUS_REDIRECT);
+				}else{
+					header('Location: '. $_SERVER['HTTP_HOST'].REL_PATH_FRONTEND);
+				}
 				die();
 			default:
 				throw new CHttpException(404,'The requested page does not exist.');
 		}
+	}
+	
+	/**
+	 * Send data to ajax request.
+	 * @param json string $data
+	 */
+	public static function responeAjaxRequest($data,$status=self::HTTP_STATUS_OK){
+		header('Content-Type: application/json; charset="UTF-8"');
+		echo CJSON::encode(array('status'=>$status,'data'=>$data));
+	}
+	
+	public function handleRequest(){
+		//check client status
+		$client_status = self::NO_CLIENT_STATE;
+		if(isset($_POST['status'])){
+			$client_status = htmlspecialchars($_POST['status']);
+		}
+		
+		switch ($client_status) {
+			case self::HTTP_STATUS_OK:
+				//set direction
+				if(isset($_POST['direction'])){
+					Yii::app()->session['TE_PageDirection'] = htmlspecialchars($_POST['direction']);
+				}
+				//return user data
+				if(isset($_POST['ajaxData'])){
+					//TODO: userInput can be invalid
+					$data = TestRunParser::json_decode($_POST['ajaxData']);
+					//validate client data
+					$data = TestRunParser::validateClientData($data);
+					return $data;
+				}
+			break;
+			
+			case self::HTTP_STATUS_RENDERING_OK:
+				//wirte to timelog
+				//return HTTP OK flag
+				self::responeAjaxRequest("",self::HTTP_STATUS_OK);
+				die();
+			break;
+			
+			case self::NO_CLIENT_STATE:
+				//fall through
+			default:
+				//save to timelog;
+				
+			break;
+		}
+		
 	}
 	
 	/**
@@ -78,19 +144,6 @@ class TestEngineController extends Controller
 		unset(Yii::app()->session['uberTestId']);
 	}
 	
-	/**
-	 * TEST-ENGINE LOOPController.
-	 * A TestEngine loop has three stages.
-	 * (1) Input
-	 * (2) Update
-	 * (3) Render
-	 * The loop will go through these three stages until the test is aborted or finished. 
-	 */
-	public function actionStartLoop()
-	{	
-		
-	}
-
 	/**
 	 * This is the action to handle external exceptions.
 	 */

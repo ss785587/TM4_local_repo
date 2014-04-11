@@ -52,7 +52,7 @@ class InitializationController extends Controller
 		
 		//if session is not set, redirection to frontend
 		if(!isset($userId) || !isset($uberTestId)){
-			header('Location:'.REL_PATH_FRONTEND);
+			header('Location:'.$_SERVER['HTTP_HOST'].REL_PATH_FRONTEND);
 			die();
 		}
 		
@@ -128,7 +128,20 @@ class InitializationController extends Controller
 		Yii::app()->session['TE_testrunDbObj'] = $testRun;
 		//skip INPUT step and begin with UPDATE
 		Yii::app()->session['TE_step'] = TestEngineController::TE_STEP_UPDATE;
-		$this->redirect($this->createUrl("testEngine/index"));
+		//Render TestEngine Template
+		
+		$this->includeJsFiles();
+		$this->render('//TE_index', array('dataProvider'=>null));
+		//$this->redirect($this->createUrl("testEngine/index"));
+	}
+	
+	private function includeJsFiles(){
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/testengine.js');
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/TE_update.js');
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/TE_render.js');
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/calculation.js');
+		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/TestRunDelegator.js');
+		Yii::app()->clientScript->registerCoreScript('jquery');
 	}
 	
 	/**

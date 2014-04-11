@@ -36,9 +36,49 @@ class RenderController extends Controller
 			die();
 		}
 		
-		//TODO: create templete of elements
-		$this->render('//TE_index');
-
+		//create deepcopy of page
+		$outputPage = TestRunParser::decode(TestRunParser::encodeToJson($page));
+		//add content of elements to page, so it can be send to the client
+		$outputPage = $this->mergeElementsToPage($outputPage);
+		//output to AJAX call
+		Yii::import('TestEngineController');
+		TestEngineController::responeAjaxRequest(TestRunParser::encodeToJson($outputPage));
+		Yii::app()->session['TE_step'] = TestEngineController::TE_STEP_INPUT;
+		Yii::app()->session['TE_PageDirection'] = TestEngineController::TE_PAGE_REFRESH;
+	}
+	
+	/**
+	 * Copys element objects to pages-elements-name array. If an object cant be found, it will be remove at the page.
+	 * @param object $page current page object
+	 * @return modified page object
+	 */
+	private function mergeElementsToPage($page){
+		foreach($page->elements as $i=>$elementName){
+			$element = $this->testRunObj->getElement($elementName);
+			if(!isset($element)){
+				unset($page->elements[$i]);
+			}else{
+				$page->elements[$i] = $element;
+				//add template to page
+				if(!isset($page->templates)){
+					$page->templates = array();
+				} 
+				
+				$template = $this->testRunObj->getPropValue('templates', $element->type);
+				if(!in_array($template, $page->templates)){
+					if(isset($template)){
+						array_push($page->templates, $template);
+					}
+				}
+			}			
+		}
+		
+		//add variables to page
+		if($this->testRunObj->hasVariables()){			
+			$page->variables = $this->testRunObj->variables;
+		}
+		
+		return $page;
 	}
 	
 	/**

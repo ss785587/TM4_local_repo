@@ -2,7 +2,7 @@
 
 class TestRunParser
 {
-	public static function parseJson($jsonString){
+	public static function decodeToTestRunObj($jsonString){
 		//parse Document
 		$jsonObject = self::json_decode($jsonString);
 		
@@ -18,6 +18,11 @@ class TestRunParser
 	public static function encodeToJson($obj){
 		//encode Object
 		return self::json_encode($obj);
+	}
+	
+	public static function decode($jsonString){
+		//parse Document
+		return self::json_decode($jsonString);
 	}
 
 	
@@ -84,6 +89,27 @@ class TestRunParser
 			throw new CException($errorMsg);
 		}
 		return $decoded;
+	}
+	
+	/**
+	 * Uses htmlspecialchar for all available data (recursive).
+	 * @param unknown $data
+	 * @return NULL|string
+	 */
+	public static function validateClientData($data){
+		if(!isset($data)){
+			return null;
+		}
+		if(is_object($data) || is_array($data)){
+			//object or array
+			foreach($data as $prop=>$value){
+				$value = self::validateClientData($value);
+			}
+			return $data;
+		}else{
+			//primitive data type
+			return htmlspecialchars($data);
+		}
 	}
 	
 }

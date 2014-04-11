@@ -9,6 +9,7 @@ class TestRunObject{
 	public $contentelements = null;
 	public $pages = null;
 	public $subtests = null;
+	public $templates = null;
 	public $timelog = null;
 	public $user = null;
 	public $triggers = null;
@@ -58,10 +59,16 @@ class TestRunObject{
 			throw new CException('Invalid JSON: subtest missing');
 		}
 		//validate and save triggers
-		if(property_exists($jsonObj,'triggers')){
+		if(property_exists($jsonObj,'triggers') && isset($jsonObj->triggers)){
 			if(ValidatorTestRun::validateTriggers($jsonObj->triggers)){
 				$this->triggers = $jsonObj->triggers;
 			}			
+		}
+		//validate and save templates
+		if(property_exists($jsonObj,'templates')){
+			if(ValidatorTestRun::validateTemplates($jsonObj->templates)){
+				$this->templates = $jsonObj->templates;
+			}
 		}
 		//validate and save triggers
 		if(property_exists($jsonObj,'user')){
@@ -98,6 +105,70 @@ class TestRunObject{
 				if($valueName === $value->name){
 					return $value;
 				}
+			} 
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns value of the given property if it exists by the given id. Otherwise method returns null.
+	 * @param string $propertyName name of property
+	 * @param string $id id of the value
+	 * @return Object|NULL
+	 */
+	public function getPropValueById($propertyName, $id){
+		if(isset($this->$propertyName)){
+			foreach ($this->$propertyName as $value){
+				if(isset($value->id)){
+					if($id === $value->id){
+						return $value;
+					}	
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Searches in the whole object for given id. Returnes value if found, else null. 
+	 * @param integer $id id of value
+	 * @return $value|null
+	 */
+	public function getValueById($id){
+		//iterate over all properties
+		foreach($this as $prop=>$propVal){
+			if(is_array($propVal)){
+				//$propVal is array
+				$tmpVal =  $this->getPropValueById($prop,$id);
+				if(isset($tmpVal)){
+					return $tmpVal;
+				}
+			}else{
+				//$propVal is Object or variable
+				if(property_exists($propVal, "id")){
+					if($id == $propVal->id){
+						return $propVal;
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
+	 * Searches given name in items and contentelements. If name does not exist, null will be returned.
+	 * @param string $name unique contentelement or item name
+	 * @return contentelement | item | null
+	 */
+	public function getElement($name){
+		if(isset($name) && $name!=""){
+			$element = $this->getPropValue('items', $name);
+			if(isset($element)){
+				return $element;
+			}
+			$element = $this->getPropValue('contentelements', $name);
+			if(isset($element)){
+				return $element;
 			}
 		}
 		return null;

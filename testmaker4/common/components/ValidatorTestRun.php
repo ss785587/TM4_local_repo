@@ -107,6 +107,21 @@ class ValidatorTestRun{
 		return true;
 	}
 	
+	/**
+	 * Validates templates. Returns true, if all templates have following properties: name, value.
+	 *
+	 * @param array $templates given array to validate
+	 * @throws CException thrown, if one object has not the required properties
+	 * @return boolean true, if given variables have all required properties
+	 */
+	public static function validateTemplates($templates){
+		foreach ($templates as $template) {
+			//if no exception is thrown, every thing is ok
+			ValidatorTestRun::validateTemplate($template);
+		}
+		return true;
+	}
+	
 	//============================= single validator functions ==================================================
 	
 	/**
@@ -209,6 +224,20 @@ class ValidatorTestRun{
 		if(!property_exists($trigger,'name') || !property_exists($trigger, 'condition') || !property_exists($trigger, 'action') ||
 		!property_exists($trigger, 'params')){
 			throw new CException('Invalid subtest: '.print_r($trigger, true));
+		}
+		return true;
+	}
+	
+	/**
+	 * Validates a template. Returns true, if template has following properties: name, value.
+	 *
+	 * @param object $template given object to validate
+	 * @throws CException thrown, if object has not the required properties
+	 * @return boolean true, if given variable has all required properties
+	 */
+	public static function validateTemplate($template){
+		if(!property_exists($template,'name') || !property_exists($template, 'value')){
+			throw new CException('Invalid subtest: '.print_r($template, true));
 		}
 		return true;
 	}
