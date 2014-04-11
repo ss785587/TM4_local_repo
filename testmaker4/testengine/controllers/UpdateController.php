@@ -7,11 +7,11 @@ class UpdateController extends Controller
 		 */
 	public function actionIndex(){
 		$testRunDbObj = Yii::app()->session['TE_testrunDbObj'];
-		if(!isset($testRunDbObj)){
+		$testRunObj = Yii::app()->session['TE_jsonObj'];
+		if(!isset($testRunDbObj) || !isset($testRunObj)){
 			throw new CException('No TestRun in update loop');
 		}
-		//save Object to JSON-String
-		$testRunObj = TestRunParser::decodeToTestRunObj($testRunDbObj->jsonData);
+		
 		//recalculate and update variables
 		$testRunObj->updateVariables();
 		

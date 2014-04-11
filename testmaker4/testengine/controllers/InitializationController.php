@@ -56,7 +56,7 @@ class InitializationController extends Controller
 			die();
 		}
 		
-		//check, if the user have already started the given uberTest
+		//check, if user have already started the given uberTest
 		$testRuns = $this->getAvailableTestRuns($uberTestId, $userId);
 		if(isset($testRuns) && count($testRuns)!=0){
 			//list testruns to user
@@ -123,18 +123,28 @@ class InitializationController extends Controller
 		
 	}
 	
-	public function startTestEngineLoop($testRun){
-		Yii::import('application.controllers.TestEngineController');
-		Yii::app()->session['TE_testrunDbObj'] = $testRun;
+	/**
+	 * Start TestEngine loop and parse JSON-TestRun.
+	 * @param unknown $testRun
+	 */
+	public function startTestEngineLoop($testRunDbObj){
+		//parse JSON TestRun
+		$testRunObj = TestRunParser::decodeToTestRunObj($testRunDbObj->jsonData);
+		//set session
+		Yii::app()->session['TE_testrunDbObj'] = $testRunDbObj;
+		Yii::app()->session['TE_jsonObj'] = $testRunObj;
 		//skip INPUT step and begin with UPDATE
+		Yii::import('application.controllers.TestEngineController');
 		Yii::app()->session['TE_step'] = TestEngineController::TE_STEP_UPDATE;
-		//Render TestEngine Template
-		
 		$this->includeJsFiles();
+		//Render TestEngine Template
 		$this->render('//TE_index', array('dataProvider'=>null));
 		//$this->redirect($this->createUrl("testEngine/index"));
 	}
 	
+	/**
+	 * Includes all JavaScript files.
+	 */
 	private function includeJsFiles(){
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/testengine.js');
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/TE_update.js');

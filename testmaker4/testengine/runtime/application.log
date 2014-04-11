@@ -7402,3 +7402,168 @@ Stack trace:
 #12 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CApplication.php(180): CWebApplication->processRequest()
 #13 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\www\index.php(18): CWebApplication->run()
 REQUEST_URI=/tm4//testengine/www/index.php?r=testengine/index
+2014/04/11 14:56:45 [error] [exception.CException] exception 'CException' with message 'Property "UpdateController.testRunDbObj" is not defined.' in D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CComponent.php:173
+Stack trace:
+#0 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\UpdateController.php(9): CComponent->__set('testRunDbObj', Object(TestRun))
+#1 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): UpdateController->actionIndex()
+#2 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#3 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#4 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#5 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#6 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(752): CWebApplication->runController('update/index')
+#7 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\TestEngineController.php(64): CController->forward('update/index')
+#8 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): TestEngineController->actionIndex()
+#9 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#13 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(141): CWebApplication->runController('testEngine/inde...')
+#14 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CApplication.php(180): CWebApplication->processRequest()
+#15 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\www\index.php(18): CApplication->run()
+#16 {main}
+REQUEST_URI=/tm4//testengine/www/index.php?r=testEngine/index
+HTTP_REFERER=http://localhost/tm4//testengine/www/index.php?r=initialization/initUserChoise&testRunId=1
+---
+2014/04/11 14:56:45 [error] [exception.CException] exception 'CException' with message 'Property "UpdateController.testRunDbObj" is not defined.' in D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CComponent.php:173
+Stack trace:
+#0 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\UpdateController.php(9): CComponent->__set('testRunDbObj', Object(TestRun))
+#1 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): UpdateController->actionIndex()
+#2 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#3 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#4 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#5 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#6 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(752): CWebApplication->runController('update/index')
+#7 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\TestEngineController.php(64): CController->forward('update/index')
+#8 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): TestEngineController->actionIndex()
+#9 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#13 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(141): CWebApplication->runController('testengine/inde...')
+#14 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CApplication.php(180): CWebApplication->processRequest()
+#15 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\www\index.php(18): CApplication->run()
+#16 {main}
+REQUEST_URI=/tm4//testengine/www/index.php?r=testengine/index
+HTTP_REFERER=http://localhost/tm4//testengine/www/index.php?r=initialization/initUserChoise&testRunId=1
+---
+2014/04/11 14:56:50 [error] [exception.CException] exception 'CException' with message 'Property "UpdateController.testRunDbObj" is not defined.' in D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CComponent.php:173
+Stack trace:
+#0 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\UpdateController.php(9): CComponent->__set('testRunDbObj', Object(TestRun))
+#1 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): UpdateController->actionIndex()
+#2 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#3 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#4 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#5 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#6 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(752): CWebApplication->runController('update/index')
+#7 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\TestEngineController.php(64): CController->forward('update/index')
+#8 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): TestEngineController->actionIndex()
+#9 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#10 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#11 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#12 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#13 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(141): CWebApplication->runController('testengine/inde...')
+#14 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CApplication.php(180): CWebApplication->processRequest()
+#15 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\www\index.php(18): CApplication->run()
+#16 {main}
+REQUEST_URI=/tm4//testengine/www/index.php?r=testengine/index
+HTTP_REFERER=http://localhost/tm4//testengine/www/index.php?r=initialization/initUserChoise&testRunId=1
+---
+2014/04/11 14:57:00 [error] [php] Undefined variable: testRun (D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\InitializationController.php:134)
+Stack trace:
+#0 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#1 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#2 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams()
+#3 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): InitializationController->runAction()
+#4 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): InitializationController->runActionWithFilters()
+#5 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): InitializationController->run()
+#6 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(141): CWebApplication->runController()
+#7 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CApplication.php(180): CWebApplication->processRequest()
+#8 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\www\index.php(18): CWebApplication->run()
+REQUEST_URI=/tm4//testengine/www/index.php?r=initialization/initUserChoise&newTest=1
+2014/04/11 14:57:42 [error] [php] Undefined variable: testRun (D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\InitializationController.php:134)
+Stack trace:
+#0 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#1 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#2 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams()
+#3 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): InitializationController->runAction()
+#4 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): InitializationController->runActionWithFilters()
+#5 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): InitializationController->run()
+#6 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(141): CWebApplication->runController()
+#7 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CApplication.php(180): CWebApplication->processRequest()
+#8 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\www\index.php(18): CWebApplication->run()
+REQUEST_URI=/tm4//testengine/www/index.php?r=initialization/initUserChoise&newTest=1
+2014/04/11 14:57:56 [error] [php] Undefined variable: testRun (D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\InitializationController.php:134)
+Stack trace:
+#0 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CAction.php(108): ReflectionMethod->invokeArgs()
+#1 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(47): CInlineAction->runWithParamsInternal()
+#2 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams()
+#3 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): InitializationController->runAction()
+#4 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): InitializationController->runActionWithFilters()
+#5 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): InitializationController->run()
+#6 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(141): CWebApplication->runController()
+#7 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CApplication.php(180): CWebApplication->processRequest()
+#8 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\www\index.php(18): CWebApplication->run()
+REQUEST_URI=/tm4//testengine/www/index.php?r=initialization/initUserChoise&newTest=1
+2014/04/11 14:58:21 [error] [exception.CException] exception 'CException' with message 'No TestRun in update loop' in D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\UpdateController.php:12
+Stack trace:
+#0 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): UpdateController->actionIndex()
+#1 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#2 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#3 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#5 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(752): CWebApplication->runController('update/index')
+#6 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\TestEngineController.php(64): CController->forward('update/index')
+#7 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): TestEngineController->actionIndex()
+#8 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#9 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#10 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#12 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(141): CWebApplication->runController('testengine/inde...')
+#13 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CApplication.php(180): CWebApplication->processRequest()
+#14 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\www\index.php(18): CApplication->run()
+#15 {main}
+REQUEST_URI=/tm4//testengine/www/index.php?r=testengine/index
+HTTP_REFERER=http://localhost/tm4//testengine/www/index.php?r=initialization/initUserChoise&newTest=1
+---
+2014/04/11 15:00:15 [error] [exception.CException] exception 'CException' with message 'No TestRun in update loop' in D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\UpdateController.php:12
+Stack trace:
+#0 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): UpdateController->actionIndex()
+#1 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#2 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#3 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#5 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(752): CWebApplication->runController('update/index')
+#6 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\TestEngineController.php(64): CController->forward('update/index')
+#7 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): TestEngineController->actionIndex()
+#8 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#9 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#10 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#12 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(141): CWebApplication->runController('testengine/inde...')
+#13 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CApplication.php(180): CWebApplication->processRequest()
+#14 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\www\index.php(18): CApplication->run()
+#15 {main}
+REQUEST_URI=/tm4//testengine/www/index.php?r=testengine/index
+HTTP_REFERER=http://localhost/tm4//testengine/www/index.php?r=initialization/initUserChoise&newTest=1
+---
+2014/04/11 15:01:17 [error] [exception.CException] exception 'CException' with message 'No TestRun in update loop' in D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\UpdateController.php:12
+Stack trace:
+#0 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): UpdateController->actionIndex()
+#1 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#2 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#3 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#4 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#5 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(752): CWebApplication->runController('update/index')
+#6 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\controllers\TestEngineController.php(64): CController->forward('update/index')
+#7 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\actions\CInlineAction.php(49): TestEngineController->actionIndex()
+#8 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(308): CInlineAction->runWithParams(Array)
+#9 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(286): CController->runAction(Object(CInlineAction))
+#10 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CController.php(265): CController->runActionWithFilters(Object(CInlineAction), Array)
+#11 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(282): CController->run('index')
+#12 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\web\CWebApplication.php(141): CWebApplication->runController('testengine/inde...')
+#13 D:\tm4\github_Repo\TM4_local_repo\testmaker4\common\lib\yii\base\CApplication.php(180): CWebApplication->processRequest()
+#14 D:\tm4\github_Repo\TM4_local_repo\testmaker4\testengine\www\index.php(18): CApplication->run()
+#15 {main}
+REQUEST_URI=/tm4//testengine/www/index.php?r=testengine/index
+HTTP_REFERER=http://localhost/tm4//testengine/www/index.php?r=initialization/initUserChoise&newTest=1
+---

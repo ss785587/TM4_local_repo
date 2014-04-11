@@ -106,7 +106,6 @@ class TestEngineController extends Controller
 				}
 				//return user data
 				if(isset($_POST['ajaxData'])){
-					//TODO: userInput can be invalid
 					$data = TestRunParser::json_decode($_POST['ajaxData']);
 					//validate client data
 					$data = TestRunParser::validateClientData($data);
@@ -124,7 +123,7 @@ class TestEngineController extends Controller
 			case self::NO_CLIENT_STATE:
 				//fall through
 			default:
-				//save to timelog;
+				//TODO: save to timelog;
 				
 			break;
 		}
