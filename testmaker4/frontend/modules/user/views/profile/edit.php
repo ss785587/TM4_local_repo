@@ -4,9 +4,6 @@ $this->breadcrumbs=array(
 	UserModule::t("Edit"),
 );
 $this->menu=array(
-	((UserModule::isAdmin())
-		?array('label'=>UserModule::t('Manage Users'), 'url'=>array('/user/admin'))
-		:array()),
     array('label'=>UserModule::t('Profile'), 'url'=>array('/user/profile')),
     array('label'=>UserModule::t('Change password'), 'url'=>array('changepassword')),
     array('label'=>UserModule::t('Logout'), 'url'=>array('/user/logout')),
@@ -27,31 +24,8 @@ $this->menu=array(
 
 	<p class="note"><?php echo UserModule::t('Fields with <span class="required">*</span> are required.'); ?></p>
 
-	<?php echo $form->errorSummary(array($model,$profile)); ?>
-
-<?php 
-		$profileFields=$profile->getFields();
-		if ($profileFields) {
-			foreach($profileFields as $field) {
-			?>
-	<div class="row">
-		<?php echo $form->labelEx($profile,$field->varname);
-		
-		if ($widgetEdit = $field->widgetEdit($profile)) {
-			echo $widgetEdit;
-		} elseif ($field->range) {
-			echo $form->dropDownList($profile,$field->varname,Profile::range($field->range));
-		} elseif ($field->field_type=="TEXT") {
-			echo $form->textArea($profile,$field->varname,array('rows'=>6, 'cols'=>50));
-		} else {
-			echo $form->textField($profile,$field->varname,array('size'=>60,'maxlength'=>(($field->field_size)?$field->field_size:255)));
-		}
-		echo $form->error($profile,$field->varname); ?>
-	</div>	
-			<?php
-			}
-		}
-?>
+	<?php echo $form->errorSummary(array($model)); ?>
+	
 	<div class="row">
 		<?php echo $form->labelEx($model,'username'); ?>
 		<?php echo $form->textField($model,'username',array('size'=>20,'maxlength'=>20)); ?>

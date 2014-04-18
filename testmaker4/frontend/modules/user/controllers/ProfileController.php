@@ -16,8 +16,7 @@ class ProfileController extends Controller
 	{
 		$model = $this->loadUser();
 	    $this->render('profile',array(
-	    	'model'=>$model,
-			'profile'=>$model->profile,
+	    	'model'=>$model
 	    ));
 	}
 
@@ -29,32 +28,28 @@ class ProfileController extends Controller
 	public function actionEdit()
 	{
 		$model = $this->loadUser();
-		$profile=$model->profile;
 		
 		// ajax validator
 		if(isset($_POST['ajax']) && $_POST['ajax']==='profile-form')
 		{
-			echo UActiveForm::validate(array($model,$profile));
+			echo UActiveForm::validate(array($model));
 			Yii::app()->end();
 		}
 		
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			$profile->attributes=$_POST['Profile'];
 			
-			if($model->validate()&&$profile->validate()) {
+			if($model->validate()) {
 				$model->save();
-				$profile->save();
                 Yii::app()->user->updateSession();
 				Yii::app()->user->setFlash('profileMessage',UserModule::t("Changes is saved."));
 				$this->redirect(array('/user/profile'));
-			} else $profile->validate();
+			}
 		}
 
 		$this->render('edit',array(
-			'model'=>$model,
-			'profile'=>$profile,
+			'model'=>$model
 		));
 	}
 	

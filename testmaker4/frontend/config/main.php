@@ -11,7 +11,7 @@ return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Testmaker 4',
 	//'theme'=>'bootstrap',
-	'language' => 'de',
+	'language' => 'en',
 
 	// preloading 'log' component
 	'preload'=>array('log'),
