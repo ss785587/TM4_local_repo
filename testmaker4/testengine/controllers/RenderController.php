@@ -6,6 +6,10 @@ class RenderController extends Controller
 	private $testRunDbObj;
 	private $testRunObj;
 	
+	/** variable names */
+	const CUR_PAGE_VAR_NAME = "_curPage";
+	const CUR_SUBTEST_VAR_NAME = "_curSubtest";
+	
 	/**
 	 * ENTRY POINT RENDER
 	 */
@@ -87,15 +91,20 @@ class RenderController extends Controller
 	 * @param TestRunObject $testRunObj object to the current testrun
 	 */
 	private function getRenderPageName($pageDirection, $testRunObj){
-		//get current subtest
-		$curSubtestPointer = Yii::app()->session['TE_curSubtestPointer'];
-		if(!isset($curSubtestPointer)){
+		//get current subtest	
+		$tmpObj = $this->testRunObj->getPropValue("variables", self::CUR_SUBTEST_VAR_NAME); 
+		if(isset($tmpObj)){
+			$curSubtestPointer = $tmpObj->value;
+		}else{
+			//check curr
 			$curSubtestPointer = $this->getNextSubtestIndex(null);
 		}
 		//get currentpage
-		$curPageArrPointer = 0;
-		if(isset(Yii::app()->session['TE_curPageArrPointer'])){
-			$curPageArrPointer = Yii::app()->session['TE_curPageArrPointer'];
+		$tmpObj = $this->testRunObj->getPropValue("variables", self::CUR_PAGE_VAR_NAME);
+		if(isset($tmpObj)){
+			$curPageArrPointer = $tmpObj->value;
+		}else{
+			$curPageArrPointer = 0;
 		}
 		
 		switch ($pageDirection) {
@@ -145,12 +154,28 @@ class RenderController extends Controller
 				$curPageArrPointer = 0;
 			}
 		}
-		//save to session
-		Yii::app()->session['TE_curSubtestPointer'] = $curSubtestPointer;
-		Yii::app()->session['TE_curPageArrPointer'] = $curPageArrPointer;
+		//save to testrun
+		$this->saveSubTestAndPagePointer($curSubtestPointer,$curPageArrPointer);
+		
 		//get page name
 		$subtest = $this->testRunObj->subtests[$curSubtestPointer];
 		return $subtest->pages[$curPageArrPointer];
+	}
+	
+	/**
+	 * Saves the subtest pointer and the page pointer to the session and TestRunObj (into json format)
+	 * @param integer $curSubtestPointer
+	 * @param integer $curPageArrPointer
+	 */
+	public function saveSubTestAndPagePointer($curSubtestPointer,$curPageArrPointer){
+		//save to jsonObj
+		//current page
+		$this->testRunObj->setVariable(self::CUR_PAGE_VAR_NAME, $curPageArrPointer);		
+		//current subtest
+		$this->testRunObj->setVariable(self::CUR_SUBTEST_VAR_NAME, $curSubtestPointer);
+		
+		//save to json and to database
+		TE_Utils::saveTestRunToDb($this->testRunDbObj, $this->testRunObj);
 	}
 	
 	/**
@@ -174,9 +199,8 @@ class RenderController extends Controller
 			$curSubtestPointer = $subIndex;
 			$curPageArrPointer = count($subtest->pages)-1;
 		}
-		//save to session
-		Yii::app()->session['TE_curSubtestPointer'] = $curSubtestPointer;
-		Yii::app()->session['TE_curPageArrPointer'] = $curPageArrPointer;
+		//save to testrun
+		$this->saveSubTestAndPagePointer($curSubtestPointer,$curPageArrPointer);
 		//get page name
 		$subtest = $this->testRunObj->subtests[$curSubtestPointer];
 		return $subtest->pages[$curPageArrPointer];
@@ -212,7 +236,8 @@ class RenderController extends Controller
 			}
 		}
 		//set session value
-		Yii::app()->session['TE_curSubtestPointer'] = $curSubtestPointer;
+		//save to testrun
+		$this->saveSubTestAndPagePointer($curSubtestPointer, null);
 		return $curSubtestPointer;
 	}
 	

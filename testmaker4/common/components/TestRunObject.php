@@ -174,6 +174,39 @@ class TestRunObject{
 		return null;
 	}
 	
+	/**
+	 * Overrides variable, if variable exists. Otherwise a new new variable will be created.
+	 * Calculation is optional. Returns true, if the new variable could be saved.
+	 * @param unknown $varName name of variable
+	 * @param unknown $varValue value of variable
+	 * @param string $calc optional calculation
+	 * @return boolean true if successful
+	 */
+	public function setVariable($varName, $varValue, $calc=null){
+		if(!isset($this->variables)){
+			$this->variables = array();
+		}
+		if(!isset($varName) || !isset($varValue)){
+			return false;
+		}
+		
+		//variable already exists?
+		$varObj = $this->getPropValue("variables",$varName);
+		if(!isset($varObj)){
+			//create variable object
+			$varObj = new stdClass;
+			$varObj->name = $varName;
+		}
+		//add value and calculation
+		$varObj->value = $varValue;
+		if(isset($calc)){
+			$varObj->calculation = $calc;
+		}
+		//save vairable document as object to array
+		array_push($this->variables, $varObj);
+		return true;
+	}
+	
 	
 	/**
 	 * Helper method, which checks if the testrun has variables.

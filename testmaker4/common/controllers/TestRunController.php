@@ -70,5 +70,33 @@ class TestRunController extends Controller
 		}
 	}
 	
+	/**
+	 * Checks, if the the given user has already started the given uberTest.
+	 * If the testrun has one of the following status, the test run will be returned.
+	 * Allowed status: TestRun::STATUS_NEW, TestRun::STATUS_STARTED, TestRun::STATUS_PAUSED or TestRun::STATUS_CONTINUED
+	 *
+	 * @param integer $uberTestId UberTest Id
+	 * @param integer $userId User Id
+	 * @return testruns
+	 */
+	public static function getAvailableTestRuns($uberTestId, $userId){
+		$testRuns = TestRunController::getTestRunsToUberTest($uberTestId, $userId);
+		if(isset($testRuns)){
+			//check status of testruns
+			$count = count($testRuns);
+			for($i=0; $i<$count; $i++){
+				$run = $testRuns[$i];
+				if(TestRun::STATUS_NEW==$run->status || TestRun::STATUS_STARTED==$run->status ||
+				TestRun::STATUS_PAUSED==$run->status || TestRun::STATUS_CONTINUED==$run->status){
+					continue;
+				}else{
+					//remove from array
+					unset($testRuns[$i]);
+				}
+			}
+		}
+		return $testRuns;
+	}
+	
 
 }

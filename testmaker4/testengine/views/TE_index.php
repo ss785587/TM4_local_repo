@@ -1,6 +1,5 @@
 <div class='TE_wrapper'>
 	<div id='TE_content'>
-		<h1>TEST TEST TEST</h1>
 		<?php 
 			Yii::app()->getClientScript()->registerScript(
 				'init_TE',

@@ -26,7 +26,20 @@ class TestRun extends CActiveRecord
 	const STATUS_COMPLETED = 4;
 	const STATUS_SCREENED_OUT = 5;
 	const STATUS_QUOTA_ACCOMPLISHED = 6;
-		
+	
+	/**
+	 * Checks if the given status and returns true if status is STATUS_SCREENED_OUT, STATUS_QUOTA_ACCOMPLISHED or STATUS_COMPLETED.
+	 * @param integer $status status to be checked
+	 * @return boolean true if status is STATUS_SCREENED_OUT, STATUS_QUOTA_ACCOMPLISHED or STATUS_COMPLETED
+	 */	
+	public static function isFinished($status){
+		$tmp = self::STATUS_SCREENED_OUT;
+		if(self::STATUS_SCREENED_OUT == $status || self::STATUS_QUOTA_ACCOMPLISHED == $status || self::STATUS_COMPLETED == $status){
+			return true;
+		}
+		return false;
+	}
+	
 	/**
 	 * @return string the associated database table name
 	 */

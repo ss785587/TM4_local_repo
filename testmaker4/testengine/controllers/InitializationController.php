@@ -45,28 +45,24 @@ class InitializationController extends Controller
 	 */
 	public function actionIndex()
 	{	
-		$session=new CHttpSession;
-		$session->open();
-		$userId =  $session['userId'];
-		$uberTestId = $session['uberTestId'];
+		$userId =  Yii::app()->session['userId'];
+		$uberTestId = Yii::app()->session['uberTestId'];
+		$testRun = Yii::app()->session['TE_testrunDbObj'];
 		
 		//if session is not set, redirection to frontend
-		if(!isset($userId) || !isset($uberTestId)){
-			header('Location:'.$_SERVER['HTTP_HOST'].REL_PATH_FRONTEND);
+		if(!(isset($userId) && isset($uberTestId)) && !(isset($userId) && isset($testRun))){
+			//redirect to frontend
+			//$this->redirect(REL_PATH_FRONTEND);
+			$this->render('//site/error', array('code'=>'404', 'message'=>'Invalid user session. Redirection to frontpage...'));
 			die();
 		}
-		
-		//check, if user have already started the given uberTest
-		$testRuns = $this->getAvailableTestRuns($uberTestId, $userId);
-		if(isset($testRuns) && count($testRuns)!=0){
-			//list testruns to user
-			$this->render('index', array('dataProvider'=>$testRuns));
-		}else{
-			//start new test run
-			$testRun = $this->initNewTestRun($uberTestId, $userId);
-			//start TEST-ENGINE
-			$this->startTestEngineLoop($testRun);
+
+		if(!isset($testRun)){
+			//start new test
+			$testRun = $this->initNewTestRun($uberTestId, $userId);	
 		}
+		//start TEST-ENGINE
+		$this->startTestEngineLoop($testRun);
 	}
 	
 	/**
@@ -89,39 +85,6 @@ class InitializationController extends Controller
 	 	return $testRun;
 	}
 	
-	/**
-	 * Method gets user choise of TestRuns via HTTP-GET request. If no testRun Id is transmitted,
-	 * the user has chosen to start a new test. Based on the user choise, the test engine will be 
-	 * started with the given TestRun.
-	 *  
-	 * @param string $testRunId Id of chosen TestRun
-	 * @param string $newTest true, if the user want to start a new test
-	 * @throws CHttpException thrown, if userId in the session in different ot the userId saved in the TestRun
-	 */
-	public function actionInitUserChoise($testRunId=null, $newTest=false){
-		if(!isset($testRunId) && $newTest==false){
-			throw new CHttpException(404,'The requested page does not exist.');
-		}
-		//load session
-		$session=new CHttpSession;
-		$session->open();
-		$userId =  $session['userId'];
-		$uberTestId = $session['uberTestId'];
-		//check user choise
-		if($newTest){
-			$testRun = $this->initNewTestRun($uberTestId,$userId);
-		}else{
-			$testRun = TestRunController::loadModel($testRunId);
-			if($testRun->userId != $userId){
-				throw new CHttpException(404,'The requested page does not exist.');
-			}
-			//TODO: change JSON-META data
-		}
-		
-		//start TEST-ENGINE
-		$this->startTestEngineLoop($testRun);
-		
-	}
 	
 	/**
 	 * Start TestEngine loop and parse JSON-TestRun.
@@ -152,34 +115,6 @@ class InitializationController extends Controller
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/calculation.js');
 		Yii::app()->clientScript->registerScriptFile(Yii::app()->baseUrl . '/js/TestRunDelegator.js');
 		Yii::app()->clientScript->registerCoreScript('jquery');
-	}
-	
-	/**
-	 * Checks, if the the given user has already started the given uberTest.
-	 * If the testrun has one of the following status, the test run will be returned.
-	 * Allowed status: TestRun::STATUS_NEW, TestRun::STATUS_STARTED, TestRun::STATUS_PAUSED or TestRun::STATUS_CONTINUED
-	 * 
-	 * @param integer $uberTestId UberTest Id
-	 * @param integer $userId User Id
-	 * @return testruns 
-	 */
-	public function getAvailableTestRuns($uberTestId, $userId){
-		$testRuns = TestRunController::getTestRunsToUberTest($uberTestId, $userId);
-		if(isset($testRuns)){
-			//check status of testruns
-			$count = count($testRuns);
-			for($i=0; $i<$count; $i++){
-				$run = $testRuns[$i];
-				if(TestRun::STATUS_NEW==$run->status || TestRun::STATUS_STARTED==$run->status ||
-				TestRun::STATUS_PAUSED==$run->status || TestRun::STATUS_CONTINUED==$run->status){
-					continue;
-				}else{
-					//remove from array
-					unset($testRuns[$i]);
-				}
-			}
-		}
-		return $testRuns;
 	}
 	
 	/**

@@ -67,8 +67,8 @@ class TestEngineController extends Controller
 				$this->forward('render/index');
 				break;
 			case self::TE_STEP_FINISH:
-				//delete session
-				$this->destroyTESession();
+				$this->closeTest();
+				
 				//abort AJAX call
 				if(Yii::app()->request->isAjaxRequest){
 					//redirect to frontend
@@ -80,6 +80,21 @@ class TestEngineController extends Controller
 			default:
 				throw new CHttpException(404,'The requested page does not exist.');
 		}
+	}
+	
+	/**
+	 * Deletes TestEngine session variables and sets the test run status to completed.
+	 */
+	private function closeTest(){
+		//save state of the testrun
+		$testRunDbObj = Yii::app()->session['TE_testrunDbObj'];
+		if(isset($testRunDbObj)){
+			$testRunDbObj->status = TestRun::STATUS_COMPLETED;
+		}
+		TE_Utils::saveTestRunToDb($testRunDbObj);
+		
+		//delete session
+		Utils::destroyTESession();
 	}
 	
 	/**
@@ -124,24 +139,12 @@ class TestEngineController extends Controller
 				//fall through
 			default:
 				//TODO: save to timelog;
-				
 			break;
 		}
 		
 	}
 	
-	/**
-	 * Destroys all session values of TestEngine 
-	 */
-	public function destroyTESession(){
-		unset(Yii::app()->session['TE_pageDirection']);
-		unset(Yii::app()->session['TE_testrunDbObj']);
-		unset(Yii::app()->session['TE_jsonObj']);
-		unset(Yii::app()->session['TE_curSubtestPointer']);
-		unset(Yii::app()->session['TE_curPageArrPointer']);
-		unset(Yii::app()->session['TE_step']);
-		unset(Yii::app()->session['uberTestId']);
-	}
+	
 	
 	/**
 	 * This is the action to handle external exceptions.
